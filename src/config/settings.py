@@ -124,7 +124,10 @@ CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 CELERY_BEAT_SCHEDULE = {
     "get_currency_rate_task": {
         "task": "currency.tasks.get_currency_task",
-        "schedule": timedelta(seconds=60),
+        "schedule": 30.0,
+        "options": {
+            "expires": 25.0,
+        },
     },
 }
 

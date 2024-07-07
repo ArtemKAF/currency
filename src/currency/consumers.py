@@ -27,6 +27,10 @@ class CurrencyConsumer(AsyncWebsocketConsumer):
 
     async def chat_message(self, event):
         message = event["message"]
+
+        if len(self.messages) == 10:
+            self.messages.popitem()
+
         self.message_key = datetime.now()
         self.messages.update({f"{self.message_key}": message})
         self.messages.move_to_end(f"{self.message_key}", last=False)
