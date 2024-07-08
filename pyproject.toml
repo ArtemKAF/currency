@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "currency"
 version = "0.1.0"
-description = "Тестовое задание создания эндпоинта для получения курса рубля к доллару."
+description = "Тестовое задание создания эндпоинта для получения курса доллара к рублю."
 authors = ["Kozin Artem <grot_artem@inbox.ru>"]
 license = "MIT"
 readme = "README.md"

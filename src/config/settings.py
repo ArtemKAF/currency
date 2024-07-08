@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = environ.get("SECRET_KEY", "default")
 
-DEBUG = environ.get("DEBUG", False)
+DEBUG = environ.get("DEBUG", "FALSE").upper() == "TRUE"
 
 ALLOWED_HOSTS = environ.get("ALLOWED_HOSTS", "localhost").split(",")
 
