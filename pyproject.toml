@@ -24,6 +24,7 @@ django-stubs = "^5.0.2"
 pre-commit = "^3.7.1"
 types-requests = "^2.32.0.20240622"
 types-redis = "^4.6.0.20240425"
+celery-stubs = "^0.1.3"
 
 
 
