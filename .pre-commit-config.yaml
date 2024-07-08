@@ -28,4 +28,8 @@ repos:
       - id: mypy
         exclude: migrations
         additional_dependencies:
-          [types-requests==2.32.0.20240622, django-stubs==5.0.2]
+          [
+            types-requests==2.32.0.20240622,
+            django-stubs==5.0.2,
+            types-redis==4.6.0.20240425,
+          ]

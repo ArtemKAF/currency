@@ -1,14 +1,14 @@
-import os
 from datetime import timedelta
+from os import environ
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get("SECRET_KEY", "default")
+SECRET_KEY = environ.get("SECRET_KEY", "default")
 
-DEBUG = os.environ.get("DEBUG", False)
+DEBUG = environ.get("DEBUG", False)
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost").split(",")
+ALLOWED_HOSTS = environ.get("ALLOWED_HOSTS", "localhost").split(",")
 
 
 INSTALLED_APPS = [
@@ -53,7 +53,7 @@ TEMPLATES = [
 ASGI_APPLICATION = "config.asgi.application"
 WSGI_APPLICATION = "config.wsgi.application"
 
-if os.environ.get("USE_SQLITE", False):
+if environ.get("USE_SQLITE", False):
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -64,11 +64,11 @@ else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.environ.get("POSTGRES_DB", "default"),
-            "USER": os.environ.get("POSTGRES_USER", "default"),
-            "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "default"),
-            "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
-            "PORT": os.environ.get("POSTGRES_PORT", 5432),
+            "NAME": environ.get("POSTGRES_DB", "default"),
+            "USER": environ.get("POSTGRES_USER", "default"),
+            "PASSWORD": environ.get("POSTGRES_PASSWORD", "default"),
+            "HOST": environ.get("POSTGRES_HOST", "localhost"),
+            "PORT": environ.get("POSTGRES_PORT", 5432),
         }
     }
 
@@ -106,20 +106,19 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+REDIS_URI = environ.get("REDIS_URI", "redis://localhost:6379")
 
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [
-                {"address": os.environ.get("REDIS_URI", "redis://localhost:6379")}
-            ],
+            "hosts": [{"address": REDIS_URI}],
         },
     },
 }
 
-CELERY_BROKER_URL = os.environ.get("REDIS_URI", "redis://localhost:6379")
-CELERY_RESULT_BACKEND = os.environ.get("REDIS_URI", "redis://localhost:6379")
+CELERY_BROKER_URL = REDIS_URI
+CELERY_RESULT_BACKEND = REDIS_URI
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 CELERY_BEAT_SCHEDULE = {
     "get_currency_rate_task": {
@@ -131,5 +130,5 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
-API_KEY = os.environ.get("API_KEY", "")
+API_KEY = environ.get("API_KEY", "")
 CURRENCY_API_URL = "https://currate.ru/api/"

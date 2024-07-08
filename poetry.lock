@@ -1338,6 +1338,35 @@ dev = ["pep8 (>=1.6.2)", "pyenchant (>=1.6.6)", "pytest (>=2.6.4)", "pytest-cov 
 twisted = ["twisted (>=20.3.0)", "zope.interface (>=5.2.0)"]
 
 [[package]]
+name = "types-cffi"
+version = "1.16.0.20240331"
+description = "Typing stubs for cffi"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "types-cffi-1.16.0.20240331.tar.gz", hash = "sha256:b8b20d23a2b89cfed5f8c5bc53b0cb8677c3aac6d970dbc771e28b9c698f5dee"},
+    {file = "types_cffi-1.16.0.20240331-py3-none-any.whl", hash = "sha256:a363e5ea54a4eb6a4a105d800685fde596bc318089b025b27dee09849fe41ff0"},
+]
+
+[package.dependencies]
+types-setuptools = "*"
+
+[[package]]
+name = "types-pyopenssl"
+version = "24.1.0.20240425"
+description = "Typing stubs for pyOpenSSL"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "types-pyOpenSSL-24.1.0.20240425.tar.gz", hash = "sha256:0a7e82626c1983dc8dc59292bf20654a51c3c3881bcbb9b337c1da6e32f0204e"},
+    {file = "types_pyOpenSSL-24.1.0.20240425-py3-none-any.whl", hash = "sha256:f51a156835555dd2a1f025621e8c4fbe7493470331afeef96884d1d29bf3a473"},
+]
+
+[package.dependencies]
+cryptography = ">=35.0.0"
+types-cffi = "*"
+
+[[package]]
 name = "types-pyyaml"
 version = "6.0.12.20240311"
 description = "Typing stubs for PyYAML"
@@ -1347,6 +1376,21 @@ files = [
     {file = "types-PyYAML-6.0.12.20240311.tar.gz", hash = "sha256:a9e0f0f88dc835739b0c1ca51ee90d04ca2a897a71af79de9aec5f38cb0a5342"},
     {file = "types_PyYAML-6.0.12.20240311-py3-none-any.whl", hash = "sha256:b845b06a1c7e54b8e5b4c683043de0d9caf205e7434b3edc678ff2411979b8f6"},
 ]
+
+[[package]]
+name = "types-redis"
+version = "4.6.0.20240425"
+description = "Typing stubs for redis"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "types-redis-4.6.0.20240425.tar.gz", hash = "sha256:9402a10ee931d241fdfcc04592ebf7a661d7bb92a8dea631279f0d8acbcf3a22"},
+    {file = "types_redis-4.6.0.20240425-py3-none-any.whl", hash = "sha256:ac5bc19e8f5997b9e76ad5d9cf15d0392d9f28cf5fc7746ea4a64b989c45c6a8"},
+]
+
+[package.dependencies]
+cryptography = ">=35.0.0"
+types-pyOpenSSL = "*"
 
 [[package]]
 name = "types-requests"
@@ -1361,6 +1405,17 @@ files = [
 
 [package.dependencies]
 urllib3 = ">=2"
+
+[[package]]
+name = "types-setuptools"
+version = "70.2.0.20240704"
+description = "Typing stubs for setuptools"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "types-setuptools-70.2.0.20240704.tar.gz", hash = "sha256:2f8d28d16ca1607080f9fdf19595bd49c942884b2bbd6529c9b8a9a8fc8db911"},
+    {file = "types_setuptools-70.2.0.20240704-py3-none-any.whl", hash = "sha256:6b892d5441c2ed58dd255724516e3df1db54892fb20597599aea66d04c3e4d7f"},
+]
 
 [[package]]
 name = "typing-extensions"
@@ -1499,4 +1554,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "ac10cd222a6684fe7ca8b858531d3f0ee0aaed6bcb195ef0e92a3d390603834a"
+content-hash = "a87515ac187db555fed5455129cfacc30438264f5cf52e592d702b2b00dbffed"
