@@ -11,9 +11,6 @@ def get_currency_api_request() -> dict:
     key = settings.API_KEY
     url = settings.CURRENCY_API_URL
 
-    if settings.DEBUG:
-        data = dumps({"data": {"USDRUB": randint(1, 1000)}})
-    else:
-        data = get(f"{url}?get=rates&pairs=USDRUB&key={key}").text
+    data = get(f"{url}?get=rates&pairs=USDRUB&key={key}").text
 
     return loads(data).get("data", {})
