@@ -1,16 +1,19 @@
-from json import dumps, loads
+import json
 from random import randint
 
+import requests
 from django.conf import settings
-from requests import get
 
 
-def get_currency_api_request() -> dict:
+def get_currency_api_request(url: str) -> dict:
     """функция получения данных о курсе пары доллар-рубль."""
 
-    key = settings.API_KEY
-    url = settings.CURRENCY_API_URL
+    if settings.DEBUG:
+        data = json.dumps({"data": {"USDRUB": randint(1, 1000)}})
+    else:
+        try:
+            data = requests.get(url).text
+        except Exception as e:
+            data = json.dumps({"data": str(e)})
 
-    data = get(f"{url}?get=rates&pairs=USDRUB&key={key}").text
-
-    return loads(data).get("data", {})
+    return json.loads(data).get("data", {})

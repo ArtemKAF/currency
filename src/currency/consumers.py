@@ -1,7 +1,7 @@
+import json
 from collections import OrderedDict
 from datetime import datetime
-from json import dumps, loads
-from typing import Any, Mapping, OrderedDict
+from typing import Any, Mapping
 
 import redis
 from channels.generic.websocket import AsyncWebsocketConsumer
@@ -31,9 +31,9 @@ class CurrencyConsumer(AsyncWebsocketConsumer):
         if self.history_vault.exists("default_history") and (
             (history := self.history_vault.get("default_history")) is not None
         ):
-            self.messages.update(loads(history))
+            self.messages.update(json.loads(history))
 
-        data = get_currency_api_request()
+        data = get_currency_api_request(settings.CURRENCY_API_COMPLITE_URL)
         await self.channel_layer.group_send(
             "default",
             {"type": "chat.message", "message": data},
@@ -44,12 +44,14 @@ class CurrencyConsumer(AsyncWebsocketConsumer):
 
         if len(self.messages) == 10:
             self.messages.popitem()
-        self.history_vault.setex("default_history", 600, dumps(self.messages))
+        self.history_vault.setex("default_history", 600, json.dumps(self.messages))
 
         await self.channel_layer.group_discard("default", self.channel_name)
 
     async def chat_message(self, event: Mapping[str, Any]) -> None:
-        """Метод обработки событий websocket-соединения с типом "chat.message"."""
+        """
+        Метод обработки событий websocket-соединения с типом "chat.message".
+        """
 
         message = event["message"]
 
@@ -60,4 +62,4 @@ class CurrencyConsumer(AsyncWebsocketConsumer):
         self.messages.update({f"{self.message_key}": message})
         self.messages.move_to_end(f"{self.message_key}", last=False)
 
-        await self.send(text_data=dumps({"message": self.messages}))
+        await self.send(text_data=json.dumps({"message": self.messages}))

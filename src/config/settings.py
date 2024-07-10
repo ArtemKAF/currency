@@ -56,7 +56,7 @@ TEMPLATES = [
 ASGI_APPLICATION = "config.asgi.application"
 WSGI_APPLICATION = "config.wsgi.application"
 
-if environ.get("USE_SQLITE", False):
+if environ.get("USE_SQLITE", "FALSE").upper() == "TRUE":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -120,18 +120,23 @@ CHANNEL_LAYERS = {
     },
 }
 
+CURRENCY_API_URL = environ.get("CURRENCY_API_URL", "http://localhost/")
+CURRENCY_API_KEY = environ.get("CURRENCY_API_KEY", "")
+CURRENCY_API_PARAMETERS = environ.get("CURRENCY_API_PARAMETERS", "")
+CURRENCY_API_COMPLITE_URL = (
+    f"{CURRENCY_API_URL}?{CURRENCY_API_PARAMETERS}&key={CURRENCY_API_KEY}"
+)
+
 CELERY_BROKER_URL = REDIS_URI
 CELERY_RESULT_BACKEND = REDIS_URI
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 CELERY_BEAT_SCHEDULE = {
     "get_currency_rate_task": {
         "task": "currency.tasks.get_currency_task",
+        "args": (CURRENCY_API_COMPLITE_URL,),
         "schedule": 30.0,
         "options": {
             "expires": 25.0,
         },
     },
 }
-
-API_KEY = environ.get("API_KEY", "")
-CURRENCY_API_URL = "https://currate.ru/api/"

@@ -9,13 +9,13 @@ from .utils import get_currency_api_request
 
 
 @app.task
-def get_currency_task() -> None:
+def get_currency_task(url: str) -> None:
     """
     Метод получения у стороннего API данных о курсе пары доллар-рубль и
     отправки их в канал определенный в настройках как "default".
     """
 
-    message: dict = get_currency_api_request()
+    message: dict = get_currency_api_request(url)
     channel_layer: Optional[Any] = get_channel_layer("default")
     if channel_layer is not None:
         async_to_sync(channel_layer.group_send)(
